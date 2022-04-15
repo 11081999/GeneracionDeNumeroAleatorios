@@ -39,9 +39,6 @@ def display_selected_inputs(choice):
         num_rand_input.grid(row=5, column=1)
 
 
-
-
-
 window = Tk()
 
 # Adjust size
@@ -50,7 +47,7 @@ window.geometry("800x700")
 window.title("Generador de Números Random")
 
 
-#Labels e inputs
+# Labels e inputs
 seed_lb = Label(window, text="Semilla*")
 seed_input = Entry(window)
 num_rand_lb = Label(window, text="No. Randoms")
@@ -75,7 +72,8 @@ method_lb.grid(row=0, column=0)
 clicked = StringVar()
 clicked.set("")
 
-dropdown_menu = OptionMenu(window, clicked, *methods_list, command=display_selected_inputs)
+dropdown_menu = OptionMenu(
+    window, clicked, *methods_list, command=display_selected_inputs)
 dropdown_menu.grid(row=0, column=1)
 
 

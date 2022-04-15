@@ -28,14 +28,9 @@ class Congruential:
             self.__calculateCongruentialRow(result)
             self.__results_list.append(result)
 
-
-
     def __calculateCongruentialRow(self,  result):
         rand_num = (self.__a * self.__current_seed + self.__c) % self.__m
         result.append(rand_num)
-        ri = rand_num/ self.__m
+        ri = rand_num / self.__m
         self.__current_seed = rand_num
         result.append(ri)
-
-
-
