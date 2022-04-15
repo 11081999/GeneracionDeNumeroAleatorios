@@ -1,11 +1,13 @@
-#Roberto Rivera terán
-#Archana Verma Rodriguez
-#Audry
+# Roberto Rivera terán
+# Archana Verma Rodriguez
+# Audrey
 
-##Import wx
-##GUI: https://www.blog.pythonlibrary.org/2021/09/29/create-gui/
+# Import wx
+# GUI: https://www.blog.pythonlibrary.org/2021/09/29/create-gui/
 
 import wx
+
+
 class MyPanel(wx.Panel):
     def __init__(self, parent):
         super().__init__(parent)
@@ -28,15 +30,15 @@ class MyPanel(wx.Panel):
     def on_button2(self, event):
         print('You clicked the second button')
 
+
 class MyFrame(wx.Frame):
     def __init__(self):
         super().__init__(None, title='Hello World')
         panel = MyPanel(self)
         self.Show()
 
+
 if __name__ == '__main__':
     app = wx.App(redirect=False)
     frame = MyFrame()
     app.MainLoop()
-
-
