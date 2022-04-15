@@ -1,100 +1,82 @@
+
+from tkinter import *
 import tkinter as tk
-from tkinter import messagebox
-from tkinter import ttk
-
-class MyApp(tk.Tk):
-
-    def __init__(self, *args, **kwargs):
-
-        tk.Tk.__init__(self, *args, **kwargs)
-        main_frame = tk.Frame(self, bg="#84CEEB", height=600, width=1024)
-        main_frame.pack_propagate(0)
-        main_frame.pack(fill="both", expand="true")
-        main_frame.grid_rowconfigure(0, weight=1)
-        main_frame.grid_columnconfigure(0, weight=1)
-        self.resizable(0, 0) #prevents the app from being resized
-        self.geometry("1024x600") #fixes the applications size
-        self.frames = {}
-        pages = (PageOne, PageTwo)
-        for F in pages:
-            frame = F(main_frame, self)
-            self.frames[F] = frame
-            frame.grid(row=0, column=0, sticky="nsew")
-
-        #self.show_frame(Some_Widgets)
-        menubar = MenuBar(self)
-        tk.Tk.config(self, menu=menubar)
-
-    def show_frame(self, name):
-        frame = self.frames[name]
-        frame.tkraise()
-
-    #def OpenNewWindow(self):
-        #OpenNewWindow()
-
-    def Quit_application(self):
-        self.destroy()
-
-class GUI(tk.Frame):
-    def __init__(self, parent):
-        tk.Frame.__init__(self, parent)
-        self.main_frame = tk.Frame(self, bg="#BEB2A7", height=600, width=1024)
-        # self.main_frame.pack_propagate(0)
-        self.main_frame.pack(fill="both", expand="true")
-        self.main_frame.grid_rowconfigure(0, weight=1)
-        self.main_frame.grid_columnconfigure(0, weight=1)
-
-class MenuBar(tk.Menu):
-    def __init__(self, parent):
-        tk.Menu.__init__(self, parent)
-
-        menu_file = tk.Menu(self, tearoff=0)
-        self.add_cascade(label="Menu1", menu=menu_file)
-
-        menu_file.add_command(label="Page One", command=lambda: parent.show_frame(PageOne))
-        menu_file.add_separator()
-        menu_file.add_command(label="Exit Application", command=lambda: parent.Quit_application())
-        """
-        menu_orders = tk.Menu(self, tearoff=0)
-        self.add_cascade(label="Menu2", menu=menu_orders)
-
-        menu_pricing = tk.Menu(self, tearoff=0)
-        self.add_cascade(label="Menu3", menu=menu_pricing)
-        menu_pricing.add_command(label="Page One", command=lambda: parent.show_frame(PageOne))
-
-        menu_operations = tk.Menu(self, tearoff=0)
-        self.add_cascade(label="Menu4", menu=menu_operations)
-        menu_operations.add_command(label="Page Two", command=lambda: parent.show_frame(PageTwo))
-        menu_positions = tk.Menu(menu_operations, tearoff=0)
-        menu_operations.add_cascade(label="Menu5", menu=menu_positions)
-        menu_positions.add_command(label="Page Three", command=lambda: parent.show_frame(PageThree))
-        menu_positions.add_command(label="Page Four", command=lambda: parent.show_frame(PageFour))
-
-        menu_help = tk.Menu(self, tearoff=0)
-        self.add_cascade(label="Menu6", menu=menu_help)
-        menu_help.add_command(label="Open New Window", command=lambda: parent.OpenNewWindow())
-        """
 
 
-class PageOne(GUI):
-    def __init__(self, parent, controller):
-        GUI.__init__(self, parent)
+def display_selected_inputs(choice):
+    choice = clicked.get()
+    if choice == "Centros Cuadrados":
+        seed_input.delete(0, 'end')
+        num_rand_input.delete(0, 'end')
+        a_lb.grid_remove()
+        a_input.grid_remove()
+        c_lb.grid_remove()
+        c_input.grid_remove()
+        m_lb.grid_remove()
+        m_input.grid_remove()
+        seed_lb.grid(row=1, column=0)
+        seed_input.grid(row=1, column=1)
+        num_rand_lb.grid(row=2, column=0)
+        num_rand_input.grid(row=2, column=1)
+    elif choice == "Congruencial":
+        seed_input.delete(0, 'end')
+        a_input.delete(0, 'end')
+        c_input.delete(0, 'end')
+        m_input.delete(0, 'end')
+        num_rand_input.delete(0, 'end')
+        num_rand_lb.grid_remove()
+        num_rand_input.grid_remove()
 
-        label1 = tk.Label(self.main_frame, font=("Verdana", 20), text="Page One")
-        label1.pack(side="top")
+        seed_lb.grid(row=1, column=0)
+        seed_input.grid(row=1, column=1)
+        a_lb.grid(row=2, column=0)
+        a_input.grid(row=2, column=1)
+        c_lb.grid(row=3, column=0)
+        c_input.grid(row=3, column=1)
+        m_lb.grid(row=4, column=0)
+        m_input.grid(row=4, column=1)
+        num_rand_lb.grid(row=5, column=0)
+        num_rand_input.grid(row=5, column=1)
 
-class PageTwo(GUI):
-    def __init__(self, parent, controller):
-        GUI.__init__(self, parent)
-
-        label1 = tk.Label(self.main_frame, font=("Verdana", 20), text="Page Two")
-        label1.pack(side="top")
 
 
-top = MyApp()
-top.title("Tkinter App Template - Login Page")
-root = MyApp()
-root.withdraw()
-root.title("Tkinter App Template")
 
-root.mainloop()
+
+window = Tk()
+
+# Adjust size
+window.geometry("800x700")
+
+window.title("Generador de Números Random")
+
+
+#Labels e inputs
+seed_lb = Label(window, text="Semilla*")
+seed_input = Entry(window)
+num_rand_lb = Label(window, text="No. Randoms")
+num_rand_input = Entry(window)
+a_lb = Label(window, text="a*")
+a_input = Entry(window)
+c_lb = Label(window, text="c*")
+c_input = Entry(window)
+m_lb = Label(window, text="m*")
+m_input = Entry(window)
+
+methods_list = [
+    "Centros Cuadrados",
+    "Congruencial",
+    "Congruencial Mixto",
+    "Multiplicativo",
+    "Congruencial Lineal Combinado",
+]
+
+method_lb = Label(window, text="Método")
+method_lb.grid(row=0, column=0)
+clicked = StringVar()
+clicked.set("")
+
+dropdown_menu = OptionMenu(window, clicked, *methods_list, command=display_selected_inputs)
+dropdown_menu.grid(row=0, column=1)
+
+
+window.mainloop()
