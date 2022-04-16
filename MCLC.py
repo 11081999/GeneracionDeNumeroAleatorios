@@ -1,58 +1,46 @@
 import math
 import array
-from operator import mod
-
-X = []
-MOD = []
-firstValue = []
-RESULT = []
-numReglas = 0
-numRandom = 0
-
-while numReglas < 2:
-    numReglas = int(input("num reglas: \n"))
-numRandom = int(input("num random: \n"))
 
 
-def calculNum(j, k, X, MOD, RESULT):
-    res = (X[k]*RESULT[j-1][k]) % (MOD[k])
-    return res
+class MCLC:
 
+    __x = []
+    __mod = []
+    __initial_value = []
+    __result = []
+    __num_reglas = 0
+    __num_randoms = 0
 
-def mclcInit(numReglas, numRandom):
+    def __init__(self, num_randoms, num_reglas):
+        self.__num_randoms = num_randoms
+        self.__num_reglas = num_reglas
 
-    # init reglas y value
-    print("number of rules:", numReglas, "\n")
-    print("number of random:", numRandom, "\n")
+    def initValue(self):
+        for i in range(self.__num_reglas):
+            x = 0
+            mod = 0
 
-    print("init first rule:\n")
-    for i in range(numReglas):
+            x = int(input("x : \n"))
+            mod = int(input("mod : \n"))
+            intial_value = int(input("intial value: \n"))
+            self.__x.append(x)
+            self.__mod.append(mod)
+            self.__initial_value.append(intial_value)
+            print("next rule:\n")
 
-        x = int(input("x : \n"))
-        mod = int(input("mod : \n"))
-        firstRandom = int(input("firstRandom: \n"))
-        X.append(x)
-        MOD.append(mod)
-        firstValue.append(firstRandom)
-        print("next rule:\n")
+    def calculNum(self, j, k):
+        res = (self.__x[k]*self.__result[j-1][k]) % (self.__mod[k])
+        return res
 
-    mclcAlgo(numReglas, numRandom, X, MOD, firstValue)
+    def calculateAllResults(self):
+        for j in range(self.__num_randoms):
+            if j == 0:
+                self.__result.append(self.__initial_value)  # init tab result
+                continue
 
+            tabIntermediaire = []
 
-def mclcAlgo(numReglas, numRandom, X, MOD, firstValue):
+            for k in range(self.__num_reglas):
+                tabIntermediaire.append(self.calculNum(j, k))
 
-    for j in range(numRandom):
-        if j == 0:
-            RESULT.append(firstValue)  # init tab result
-            continue
-
-        tabIntermediaire = []
-
-        for k in range(numReglas):
-            tabIntermediaire.append(calculNum(j, k, X, MOD, RESULT))
-
-        RESULT.append(tabIntermediaire)
-
-
-mclcInit(numReglas, numRandom)
-print("RESULT FINAL", str(RESULT))
+            self.__result.append(tabIntermediaire)
