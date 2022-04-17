@@ -2,8 +2,13 @@ import tkinter as tk
 from tkinter import messagebox
 from tkinter import ttk
 import Mate
+
 from tkinter import *
+from tkinter.tix import *
 from LinearCongruential import LinearCongruential
+from MixedCongruential import MixedCongruential
+from MiddleSquares import MiddleSquares
+from MultGen import MultGen
 
 """
 Useful Links:
@@ -22,15 +27,31 @@ frame_styles = {"relief": "groove",
                 "bd": 3, "bg": "#BEB2A7",
                 "fg": "#073bb3", "font": ("Arial", 9, "bold")}
 
+frame_styles_1 = {"relief": "groove",
+                "bd": 3, "bg": "#e6faf9",
+                "fg": "#073bb3", "font": ("Arial", 9, "bold")}
+
+frame_styles_2 = {"relief": "groove",
+                "bd": 3, "bg": "#faf7e5",
+                "fg": "#073bb3", "font": ("Arial", 9, "bold")}
+
+frame_styles_3 = {"relief": "groove",
+                "bd": 3, "bg": "#e5fae9",
+                "fg": "#073bb3", "font": ("Arial", 9, "bold")}
+
+frame_styles_4 = {"relief": "groove",
+                "bd": 3, "bg": "#e8e5fa",
+                "fg": "#073bb3", "font": ("Arial", 9, "bold")}
+
 def createTable(table, datset):
 
     for i in range(0, len(table['columns']) + 1):
         if i == 0:
             table.column("#0", width=0, stretch=NO)
-            table.heading("#0", text="", anchor=CENTER)
+            table.heading("#0", text="", anchor="w")
         elif i > 0:
-            table.column(str(table["columns"][i - 1]), anchor=CENTER, width=120)
-            table.heading(str(table["columns"][i - 1]), text=str(table["columns"][i - 1]), anchor=CENTER)
+            table.column(str(table["columns"][i - 1]), anchor="w", width=120)
+            table.heading(str(table["columns"][i - 1]), text=str(table["columns"][i - 1]), anchor="w")
 
     for i in range(0, len(datset)):
         row = []
@@ -52,10 +73,10 @@ class MyApp(tk.Tk):
         main_frame.pack(fill="both", expand="true")
         main_frame.grid_rowconfigure(0, weight=1)
         main_frame.grid_columnconfigure(0, weight=1)
-        self.resizable(0, 0) #prevents the app from being resized
-        self.geometry("1024x600") #fixes the applications size
+        #self.resizable(0, 0) #prevents the app from being resized
+        self.geometry("1200x600") #fixes the applications size
         self.frames = {}
-        pages = (Inicio, PageCL, PageTwo, PageThree, PageFour)
+        pages = (Inicio, PageCL, PageMxC, PageMS, PageMult)
         for F in pages:
             frame = F(main_frame, self)
             self.frames[F] = frame
@@ -68,9 +89,6 @@ class MyApp(tk.Tk):
         frame = self.frames[name]
         frame.tkraise()
 
-    def OpenNewWindow(self):
-        OpenNewWindow()
-
     def Quit_application(self):
         self.destroy()
 
@@ -81,6 +99,11 @@ class MenuBar(tk.Menu):
         menu_file = tk.Menu(self, tearoff=0)
         self.add_cascade(label="Menu1", menu=menu_file)
         menu_file.add_command(label="Congruencial Lineal", command=lambda: parent.show_frame(PageCL))
+        menu_file.add_command(label="Congruencial Mixto", command=lambda: parent.show_frame(PageMxC))
+        menu_file.add_command(label="Centros Cuadrados", command=lambda: parent.show_frame(PageMS))
+
+        menu_file.add_command(label="Multiplicativo", command=lambda: parent.show_frame(PageMult))
+
         menu_file.add_separator()
         menu_file.add_command(label="Exit Application", command=lambda: parent.Quit_application())
 
@@ -95,7 +118,6 @@ class GUI(tk.Frame):
         self.main_frame.grid_columnconfigure(0, weight=1)
 
 
-
 class Inicio(GUI):  # inherits from the GUI class
     def __init__(self, parent, controller):
         GUI.__init__(self, parent)
@@ -108,96 +130,120 @@ class PageCL(GUI):
     def __init__(self, parent, controller):
         GUI.__init__(self, parent)
 
+        self.main_frame.configure(bg= frame_styles_1.get("bg"))
+
         label1 = tk.Label(self.main_frame, font=("Verdana", 20), text="Congruencial Lineal")
         label1.pack(side="top")
+        label1.config(bg=frame_styles_1.get("bg"))
 
-        frame1 = tk.LabelFrame(self, frame_styles, text="Input")
-        frame1.place(rely=0.09, relx=0.02, height=400, width=200)
+        frame1 = tk.LabelFrame(self, frame_styles_1, text="Input")
+        frame1.place(rely=0.09, relx=0.02, height=500, width=200)
 
         #initial_seed, a, c, m, num_randoms
 
         initial_seed_label = tk.Label(frame1, text="Semilla :")
         initial_seed_label.pack(anchor="w")
+        initial_seed_label.config(bg= frame_styles_1.get("bg"))
+
         initial_seed_input = tk.Entry(frame1)
         initial_seed_input.pack(anchor="w")
 
         a_label = tk.Label(frame1, text="a :")
         a_label.pack(anchor="w")
-        a_input = tk.Entry(frame1)
+        a_label.config(bg=frame_styles_1.get("bg"))
+
+        a_input = tk.Entry(frame1, width=20)
         a_input.pack(anchor="w")
 
         c_label = tk.Label(frame1, text="c :")
         c_label.pack(anchor="w")
-        c_input = tk.Entry(frame1)
+        c_label.config(bg= frame_styles_1.get("bg"))
+
+        c_input = tk.Entry(frame1, width=20)
         c_input.pack(anchor="w")
 
         m_label = tk.Label(frame1, text="m :")
         m_label.pack(anchor="w")
-        m_input = tk.Entry(frame1)
+        m_label.config(bg= frame_styles_1.get("bg"))
+
+        m_input = tk.Entry(frame1, width=20)
         m_input.pack(anchor="w")
 
         num_randoms_label = tk.Label(frame1, text="No. Randoms :")
         num_randoms_label.pack(anchor="w")
-        num_randoms_input = tk.Entry(frame1)
+        num_randoms_label.config(bg= frame_styles_1.get("bg"))
+
+        num_randoms_input = tk.Entry(frame1, width=20)
         num_randoms_input.pack(anchor="w")
 
-        button1 = tk.Button(frame1, text="Generar Random", command=lambda: generateRand())
+        button1 = tk.Button(frame1, text="Generar Random"   , width=20,command=lambda: generateRand(frame2))
         button1.pack(anchor="w")
 
-        chi_button = tk.Button(frame1, text="Chi cuadrada", command=lambda: Chi_clac())
+        chi_button = tk.Button(frame1, text="Chi cuadrada"  , width=20, command=lambda: chi_clac(frame2))
         chi_button.pack(anchor="w")
 
-        kol_button = tk.Button(frame1, text="Kolmogrov", command=lambda: kol_clac())
+        kol_button = tk.Button(frame1, text="Kolmogrov"     , width=20, command=lambda: kol_clac(frame2))
         kol_button.pack(anchor="w")
 
-        frame2 = tk.LabelFrame(self, frame_styles, text="Tablas")
-        frame2.place(rely=0.09, relx=0.3, height=500, width=700)
+        res_button = tk.Button(frame1, text="Resultados"    , width=20, command=lambda: OpenResultsWindows())
+        res_button.pack(anchor="w")
 
-        def kol_clac():
-            initial_seed = int(initial_seed_input.get())
-            a = int(a_input.get())
-            c = int(c_input.get())
-            m = int(m_input.get())
-            num_randoms = int(num_randoms_input.get())
+        frame2 = tk.LabelFrame(self, frame_styles_1, text="Tablas")
+        frame2.place(rely=0.09, relx=0.2, height=500, width=900)
+
+        def kol_clac(frame):
+            initial_seed = str(initial_seed_input.get())
+            a = str(a_input.get())
+            c = str(c_input.get())
+            m = str(m_input.get())
+            num_randoms = str(num_randoms_input.get())
 
             for widget in frame2.winfo_children():
                 widget.destroy()
 
-
-            LC= LinearCongruential(initial_seed, a, c, m, num_randoms)
+            LC= LinearCongruential(eval(initial_seed), eval(a), eval(c), eval(m), eval(num_randoms))
             LCres= LC.getResultsList()
 
-            kol_label = tk.Label(frame2, text="Kolmogrov :")
+            kol_label = tk.Label(frame, text="Kolmogrov :")
             kol_label.pack()
 
-            kol_frame = Frame(frame2)
+            kol_frame = Frame(frame)
             kol_frame.pack()
-            Chi_table = ttk.Treeview(kol_frame)
-            Chi_table['columns'] = ('i', 'Ri', '1/N', 'I/N - Ri', 'Ri-(i-1)/N')
+            kol_table = ttk.Treeview(kol_frame)
+            kol_table['columns'] = ('i', 'Ri', '1/N', 'I/N - Ri', 'Ri-(i-1)/N')
 
             column = 3
             rand = [row[column] for row in LCres]
             LCkolAns = Mate.kolmogrov(rand)
 
-            createTable(Chi_table, LCkolAns[1])
+            createTable(kol_table, LCkolAns[1])
 
-        def Chi_clac():
-            initial_seed = int(initial_seed_input.get())
-            a = int(a_input.get())
-            c = int(c_input.get())
-            m = int(m_input.get())
-            num_randoms = int(num_randoms_input.get())
+            if LCkolAns[0] == True:
+                ans_label = tk.Label(frame, text="SE ACEPTA")
+                ans_label.pack()
+                ans_label.config(bg="#ccf5d0")
+            elif LCkolAns[0] == False:
+                ans_label = tk.Label(frame, text="SE RECHAZA")
+                ans_label.pack()
+                ans_label.config(bg="#f5d1cc")
+
+        def chi_clac(frame):
+            initial_seed = str(initial_seed_input.get())
+            a = str(a_input.get())
+            c = str(c_input.get())
+            m = str(m_input.get())
+            num_randoms = str(num_randoms_input.get())
 
             for widget in frame2.winfo_children():
                 widget.destroy()
 
-            LC= LinearCongruential(initial_seed, a, c, m, num_randoms)
+            LC= LinearCongruential(eval(initial_seed), eval(a), eval(c), eval(m), eval(num_randoms))
             LCres= LC.getResultsList()
 
-            chi_label = tk.Label(frame2, text="Chi cuadrada :")
+            chi_label = tk.Label(frame, text="Chi cuadrada :")
             chi_label.pack()
 
-            Chi_frame = Frame(frame2)
+            Chi_frame = Frame(frame)
             Chi_frame.pack()
             Chi_table = ttk.Treeview(Chi_frame)
             Chi_table['columns'] = ('k', 'Class-', 'Class+', 'Foi', 'Prob', 'Fei', 'Fo-Fe')
@@ -208,12 +254,21 @@ class PageCL(GUI):
 
             createTable(Chi_table, LCchiSqrtAns[1])
 
-        def generateRand():
-            initial_seed = int(initial_seed_input.get())
-            a = int(a_input.get())
-            c = int(c_input.get())
-            m = int(m_input.get())
-            num_randoms = int(num_randoms_input.get())
+            if LCchiSqrtAns[0] == True:
+                ans_label = tk.Label(frame, text="SE ACEPTA")
+                ans_label.pack()
+                ans_label.config(bg="#ccf5d0")
+            elif LCchiSqrtAns[0] == False:
+                ans_label = tk.Label(frame, text="SE RECHAZA")
+                ans_label.pack()
+                ans_label.config(bg="#f5d1cc")
+
+        def generateRand(frame):
+            initial_seed = str(initial_seed_input.get())
+            a = str(a_input.get())
+            c = str(c_input.get())
+            m = str(m_input.get())
+            num_randoms = str(num_randoms_input.get())
 
             for widget in frame2.winfo_children():
                 widget.destroy()
@@ -225,11 +280,14 @@ class PageCL(GUI):
             print("num_randoms: " + str(num_randoms))
             print("___________________________ ")
 
-            LC= LinearCongruential(initial_seed, a, c, m, num_randoms)
+            label1 = tk.Label(frame, text="Numeros Random :")
+            label1.pack()
+
+            LC= LinearCongruential(eval(initial_seed), eval(a), eval(c), eval(m), eval(num_randoms))
             LCres= LC.getResultsList()
             print(LCres)
 
-            LC_frame = Frame(frame2)
+            LC_frame = Frame(frame)
             LC_frame.pack()
             LC_table = ttk.Treeview(LC_frame)
             # i, semilla, No. aleatorio, random_i
@@ -242,56 +300,347 @@ class PageCL(GUI):
 
             createTable(LC_table, LCres)
 
+        class OpenResultsWindows(tk.Tk):
 
-        def bttn2():
-            # Deletes the data in the current treeview and reinserts it.
-            print("Button 2")
+            def __init__(self, *args, **kwargs):
+                tk.Tk.__init__(self, *args, **kwargs)
 
-class PageThree(GUI):
+                main_frame = tk.Frame(self)
+                main_frame.pack_propagate(0)
+                main_frame.pack(fill="both", expand="true")
+                main_frame.grid_rowconfigure(0, weight=1)
+                main_frame.grid_columnconfigure(0, weight=1)
+                self.title("resultados jutnos")
+                self.geometry("1280x900")
+                #self.resizable(0, 0)
+
+                generateRand(main_frame)
+
+                chi_clac(main_frame)
+
+                kol_clac(main_frame)
+
+
+
+
+class PageMxC(GUI):
     def __init__(self, parent, controller):
         GUI.__init__(self, parent)
 
-        label1 = tk.Label(self.main_frame, font=("Verdana", 20), text="Page Three")
+        self.main_frame.configure(bg= frame_styles_2.get("bg"))
+
+        label1 = tk.Label(self.main_frame, font=("Verdana", 20), text="Congruencial Mixto")
         label1.pack(side="top")
+        label1.config(bg=frame_styles_2.get("bg"))
+
+        frame1 = tk.LabelFrame(self, frame_styles_2, text="Input")
+        frame1.place(rely=0.09, relx=0.02, height=500, width=200)
+
+        #initial_seed, a, c, m, num_randoms
+
+        initial_seed_label = tk.Label(frame1, text="Semilla :")
+        initial_seed_label.pack(anchor="w")
+        initial_seed_label.config(bg= frame_styles_2.get("bg"))
+
+        initial_seed_input = tk.Entry(frame1)
+        initial_seed_input.pack(anchor="w")
+
+        a_label = tk.Label(frame1, text="a :")
+        a_label.pack(anchor="w")
+        a_label.config(bg=frame_styles_2.get("bg"))
+
+        a_input = tk.Entry(frame1, width=20)
+        a_input.pack(anchor="w")
+
+        c_label = tk.Label(frame1, text="c :")
+        c_label.pack(anchor="w")
+        c_label.config(bg= frame_styles_2.get("bg"))
+
+        c_input = tk.Entry(frame1, width=20)
+        c_input.pack(anchor="w")
+
+        m_label = tk.Label(frame1, text="m :")
+        m_label.pack(anchor="w")
+        m_label.config(bg= frame_styles_2.get("bg"))
+
+        m_input = tk.Entry(frame1, width=20)
+        m_input.pack(anchor="w")
+
+        num_randoms_label = tk.Label(frame1, text="No. Randoms :")
+        num_randoms_label.pack(anchor="w")
+        num_randoms_label.config(bg= frame_styles_2.get("bg"))
+
+        num_randoms_input = tk.Entry(frame1, width=20)
+        num_randoms_input.pack(anchor="w")
+
+        mxc_button = tk.Button(frame1, text="Generar Random"  , width=20, command=lambda: mxc_calc(frame2))
+        mxc_button.pack(anchor="w")
+
+        chi_button = tk.Button(frame1, text="Chi cuadrada"  , width=20, command=lambda: chi_clac(frame2))
+        chi_button.pack(anchor="w")
+
+        kol_button = tk.Button(frame1, text="Kolmogrov"     , width=20, command=lambda: kol_clac(frame2))
+        kol_button.pack(anchor="w")
+
+        res_button = tk.Button(frame1, text="Resultados"    , width=20, command=lambda: OpenResultsWindows())
+        res_button.pack(anchor="w")
+
+        frame2 = tk.LabelFrame(self, frame_styles_2, text="Tablas")
+        frame2.place(rely=0.09, relx=0.2, height=500, width=900)
+
+        def mxc_calc(frame):
+            initial_seed = str(initial_seed_input.get())
+            a = str(a_input.get())
+            c = str(c_input.get())
+            m = str(m_input.get())
+            num_randoms = str(num_randoms_input.get())
+
+            for widget in frame.winfo_children():
+                widget.destroy()
+
+            print("initial_seed: "+ str(initial_seed))
+            print("a: " + str(a))
+            print("c: " + str(c))
+            print("m: " + str(m))
+            print("num_randoms: " + str(num_randoms))
+            print("___________________________ ")
 
 
-class PageFour(GUI):
+            MxC= MixedCongruential(eval(initial_seed), eval(a), eval(c), eval(m), eval(num_randoms))
+            MxCres= MxC.getResultsList()
+            print(MxCres)
+
+            MxC_frame = Frame(frame)
+            MxC_frame.pack()
+            MxC_table = ttk.Treeview(MxC_frame)
+            MxC_table['columns'] = ('i', 'Rand')
+
+            if not MxCres:
+                ans_label = tk.Label(frame, text="No se cumplieron las características del Teorema HULL-DOBELL")
+                ans_label.pack()
+                ans_label.config(bg="#f5d1cc")
+            else:
+                createTable(MxC_table, MxCres)
+
+        def kol_clac(frame):
+            initial_seed = str(initial_seed_input.get())
+            a = str(a_input.get())
+            c = str(c_input.get())
+            m = str(m_input.get())
+            num_randoms = str(num_randoms_input.get())
+
+            for widget in frame2.winfo_children():
+                widget.destroy()
+
+            MxC= LinearCongruential(eval(initial_seed), eval(a), eval(c), eval(m), eval(num_randoms))
+            MxCres= MxC.getResultsList()
+
+            kol_label = tk.Label(frame, text="Kolmogrov :")
+            kol_label.pack()
+
+            kol_frame = Frame(frame)
+            kol_frame.pack()
+
+            kol_table = ttk.Treeview(kol_frame)
+            kol_table['columns'] = ('i', 'Ri', '1/N', 'I/N - Ri', 'Ri-(i-1)/N')
+
+            column = 3
+            rand = [row[column] for row in MxCres]
+            MxCkolAns = Mate.kolmogrov(rand)
+
+            createTable(kol_table, MxCkolAns[1])
+
+            if MxCkolAns[0] == True:
+                ans_label = tk.Label(frame, text="SE ACEPTA")
+                ans_label.pack()
+                ans_label.config(bg="#ccf5d0")
+            elif MxCkolAns[0] == False:
+                ans_label = tk.Label(frame, text="SE RECHAZA")
+                ans_label.pack()
+                ans_label.config(bg="#f5d1cc")
+
+        def chi_clac(frame):
+            initial_seed = str(initial_seed_input.get())
+            a = str(a_input.get())
+            c = str(c_input.get())
+            m = str(m_input.get())
+            num_randoms = str(num_randoms_input.get())
+
+            for widget in frame2.winfo_children():
+                widget.destroy()
+
+            LC= LinearCongruential(eval(initial_seed), eval(a), eval(c), eval(m), eval(num_randoms))
+            LCres= LC.getResultsList()
+
+            chi_label = tk.Label(frame, text="Chi cuadrada :")
+            chi_label.pack()
+
+            Chi_frame = Frame(frame)
+            Chi_frame.pack()
+            Chi_table = ttk.Treeview(Chi_frame)
+            Chi_table['columns'] = ('k', 'Class-', 'Class+', 'Foi', 'Prob', 'Fei', 'Fo-Fe')
+
+            column = 3
+            rand = [row[column] for row in LCres]
+            LCchiSqrtAns  = Mate.chi(rand)
+
+            createTable(Chi_table, LCchiSqrtAns[1])
+
+            if LCchiSqrtAns[0] == True:
+                ans_label = tk.Label(frame, text="SE ACEPTA")
+                ans_label.pack()
+                ans_label.config(bg="#ccf5d0")
+            elif LCchiSqrtAns[0] == False:
+                ans_label = tk.Label(frame, text="SE RECHAZA")
+                ans_label.pack()
+                ans_label.config(bg="#f5d1cc")
+
+        class OpenResultsWindows(tk.Tk):
+
+            def __init__(self, *args, **kwargs):
+                tk.Tk.__init__(self, *args, **kwargs)
+
+                main_frame = tk.Frame(self)
+                main_frame.pack_propagate(0)
+                main_frame.pack(fill="both", expand="true")
+                main_frame.grid_rowconfigure(0, weight=1)
+                main_frame.grid_columnconfigure(0, weight=1)
+                self.title("resultados jutnos")
+                self.geometry("1280x900")
+                #self.resizable(0, 0)
+
+                mxc_calc(main_frame)
+
+                chi_clac(main_frame)
+
+                kol_clac(main_frame)
+
+
+
+class PageMS(GUI):
     def __init__(self, parent, controller):
         GUI.__init__(self, parent)
 
-        label1 = tk.Label(self.main_frame, font=("Verdana", 20), text="Page Four")
+        self.main_frame.configure(bg= frame_styles_3.get("bg"))
+
+        label1 = tk.Label(self.main_frame, font=("Verdana", 20), text="Centros Cuadrados")
         label1.pack(side="top")
+        label1.config(bg=frame_styles_3.get("bg"))
+
+        frame1 = tk.LabelFrame(self, frame_styles_3, text="Input")
+        frame1.place(rely=0.09, relx=0.02, height=500, width=200)
+
+        #initial_seed, a, c, m, num_randoms
+
+        initial_seed_label = tk.Label(frame1, text="Semilla :")
+        initial_seed_label.pack(anchor="w")
+        initial_seed_label.config(bg= frame_styles_3.get("bg"))
+
+        initial_seed_input = tk.Entry(frame1)
+        initial_seed_input.pack(anchor="w")
+
+        num_randoms_label = tk.Label(frame1, text="No. Randoms :")
+        num_randoms_label.pack(anchor="w")
+        num_randoms_label.config(bg= frame_styles_3.get("bg"))
+
+        num_randoms_input = tk.Entry(frame1, width=20)
+        num_randoms_input.pack(anchor="w")
+
+        chi_button = tk.Button(frame1, text="MCC CALCULAR"  , width=20, command=lambda: ms_calc(frame2))
+        chi_button.pack(anchor="w")
+
+        frame2 = tk.LabelFrame(self, frame_styles_3, text="Tablas")
+        frame2.place(rely=0.09, relx=0.2, height=500, width=900)
+
+        def ms_calc(frame):
+            initial_seed = str(initial_seed_input.get())
+            num_randoms = str(num_randoms_input.get())
+
+            for widget in frame.winfo_children():
+                widget.destroy()
+
+            print("initial_seed: "+ str(initial_seed))
+            print("num_randoms: " + str(num_randoms))
+            print("___________________________ ")
 
 
-class PageTwo(GUI):
+            MS= MiddleSquares(eval(initial_seed),eval(num_randoms))
+            MSres= MS.getResultsList()
+            print(MSres)
+
+            MS_frame = Frame(frame)
+            MS_frame.pack()
+            MS_table = ttk.Treeview(MS_frame)
+            MS_table['columns'] = ('i', 'Rand')
+
+            if not MSres:
+                ans_label = tk.Label(frame, text="No se cumplieron las características del Teorema HULL-DOBELL")
+                ans_label.pack()
+                ans_label.config(bg="#f5d1cc")
+            else:
+                createTable(MS_table, MSres)
+
+class PageMult(GUI):
     def __init__(self, parent, controller):
         GUI.__init__(self, parent)
 
-        label1 = tk.Label(self.main_frame, font=("Verdana", 20), text="Page Two")
+        self.main_frame.configure(bg=frame_styles_4.get("bg"))
+
+        label1 = tk.Label(self.main_frame, font=("Verdana", 20), text="Multiplicativo")
         label1.pack(side="top")
+        label1.config(bg=frame_styles_4.get("bg"))
 
+        frame1 = tk.LabelFrame(self, frame_styles_4, text="Input")
+        frame1.place(rely=0.09, relx=0.02, height=500, width=200)
 
-class OpenNewWindow(tk.Tk):
+        # initial_seed, a, c, m, num_randoms
 
-    def __init__(self, *args, **kwargs):
+        initial_seed_label = tk.Label(frame1, text="Semilla :")
+        initial_seed_label.pack(anchor="w")
+        initial_seed_label.config(bg=frame_styles_4.get("bg"))
 
-        tk.Tk.__init__(self, *args, **kwargs)
+        initial_seed_input = tk.Entry(frame1)
+        initial_seed_input.pack(anchor="w")
 
-        main_frame = tk.Frame(self)
-        main_frame.pack_propagate(0)
-        main_frame.pack(fill="both", expand="true")
-        main_frame.grid_rowconfigure(0, weight=1)
-        main_frame.grid_columnconfigure(0, weight=1)
-        self.title("Here is the Title of the Window")
-        self.geometry("500x500")
-        self.resizable(0, 0)
+        num_randoms_label = tk.Label(frame1, text="No. Randoms :")
+        num_randoms_label.pack(anchor="w")
+        num_randoms_label.config(bg=frame_styles_4.get("bg"))
 
-        frame1 = ttk.LabelFrame(main_frame, text="This is a ttk LabelFrame")
-        frame1.pack(expand=True, fill="both")
+        num_randoms_input = tk.Entry(frame1, width=20)
+        num_randoms_input.pack(anchor="w")
 
-        label1 = tk.Label(frame1, font=("Verdana", 20), text="OpenNewWindow Page")
-        label1.pack(side="top")
+        chi_button = tk.Button(frame1, text="MCC CALCULAR", width=20, command=lambda: mult_calc(frame2))
+        chi_button.pack(anchor="w")
 
+        frame2 = tk.LabelFrame(self, frame_styles_4, text="Tablas")
+        frame2.place(rely=0.09, relx=0.2, height=500, width=900)
+
+        def mult_calc(frame):
+            initial_seed = int(initial_seed_input.get())
+            num_randoms = int(num_randoms_input.get())
+
+            for widget in frame.winfo_children():
+                widget.destroy()
+
+            print("initial_seed: " + str(initial_seed))
+            print("num_randoms: " + str(num_randoms))
+            print("___________________________ ")
+
+            MS = MiddleSquares(initial_seed, num_randoms)
+            MSres = MS.getResultsList()
+            print(MSres)
+
+            MS_frame = Frame(frame)
+            MS_frame.pack()
+            MS_table = ttk.Treeview(MS_frame)
+            MS_table['columns'] = ('i', 'Rand')
+
+            if not MSres:
+                ans_label = tk.Label(frame, text="No se cumplieron las características del Teorema HULL-DOBELL")
+                ans_label.pack()
+                ans_label.config(bg="#f5d1cc")
+            else:
+                createTable(MS_table, MSres)
 
 
 root = MyApp()

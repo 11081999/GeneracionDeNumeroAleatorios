@@ -42,7 +42,7 @@ class MixedCongruential(LinearCongruential):
         if self.__checkTheoremHullDobell():
             self._calculateLinealCongruential()
             return self._results_list
-        return "No se cumplieron las características del Teorema HULL-DOBELL"
+        return False
 
     def __commonElements(self, arr1, arr2):
         common = [value for value in arr1 if value in arr2]
