@@ -26,9 +26,6 @@ class Multiplicativo:
         for i in range(self.__num_randoms):
             self.__semilla = self.calculateOneResult()
 
-        print("resultttt: ", str(self.__resultRandom))
-        print("resultt RI: ", str(self.__resultRI))
-
     def calculateOneResult(self):
         random = 0
         randomRI = 0
