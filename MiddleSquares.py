@@ -1,4 +1,3 @@
-
 class MiddleSquares:
     __current_seed = None
     __initial_seed = None
