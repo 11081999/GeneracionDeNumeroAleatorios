@@ -22,15 +22,18 @@ class MiddleSquares:
 
     def __calculateMiddSquaresRow(self, result):
         generator = pow(self.__current_seed, 2)
-        result.append(generator)
-        self.__current_seed = self.__splitSeed(str(generator))
+
+        self.__current_seed = self.__splitSeed(str(generator), result)
         result.append(self.__current_seed)
         ri = self.__current_seed / 10000
         result.append(ri)
 
-    def __splitSeed(self, seed):
+    def __splitSeed(self, seed, result):
         if len(seed) < 8:
             while len(seed) < 8:
+                #print("Seed: " + str(seed))
                 seed = "0" + seed
         split_seed = int(seed[2:6])
+        print("Seed: " + str(seed))
+        result.append(seed)
         return split_seed

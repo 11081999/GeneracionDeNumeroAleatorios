@@ -11,15 +11,15 @@
 import math
 from scipy.stats import ksone
 
-
-def chi():
+def chi(Xi):
+    """
     Xi = [22.9, 32.4, 26.2, 27.9, 28.9, 26.2, 28, 29.6, 28.4, 32,
           29, 32.1, 28.1, 27.9, 29.4, 29.6, 28.4, 27.8, 31.5, 23.2,
           26, 27, 31.9, 33.6, 25.5, 25.7, 30.1, 33, 28.6, 34.6,
           30.9, 30.9, 33.3, 33.5, 35.2, 37.8, 25.8, 28.1, 26.2, 29.3,
           28.7, 24.8, 28.5, 30.1, 24.3, 29.6, 33, 32.4, 32.1, 29.7]
 
-    """
+
     Xi = [8.223, 2.230, 2.920, 0.761, 1.064, 0.836, 3.810, 0.968, 4.490,
           0.186, 2.634, 1.624, 0.333, 1.514, 2.782, 4.778, 1.507, 4.025,
           1.064, 3.246, 0.406, 2.343, 0.538, 5.088, 5.587, 0.517, 1.458,
@@ -38,12 +38,12 @@ def chi():
     k= math.floor(1 + 3.322*math.log10(N))
     intervalo= rango / k
 
-    print("N: " + str(N))
-    print("rango: " + str(rango))
-    print("K: " + str(k))
-    print("intervalo: " + str(intervalo))
+    #print("N: " + str(N))
+    #print("rango: " + str(rango))
+    #print("K: " + str(k))
+    #print("intervalo: " + str(intervalo))
 
-    print("________________")
+    #print("________________")
 
     #En que parte empieza la calse(?)-----!
     clase= [Xi[0]]
@@ -62,15 +62,15 @@ def chi():
                 NoElements+= 1
         tableClass[i][2] = NoElements
 
-    print(tableClass)
-    print("________________")
+    #print(tableClass)
+    #print("________________")
 
     loop = True
     z= 0
     while loop:
 
-        print("__________")
-        print(z, tableClass[z][0], tableClass[z][1], tableClass[z][2])
+        #print("__________")
+        #print(z, tableClass[z][0], tableClass[z][1], tableClass[z][2])
 
         if tableClass[z][2] < 5:
             if z < len(tableClass)-1:
@@ -91,8 +91,8 @@ def chi():
             loop = False
         z += 1
 
-    print("________________")
-    print(tableClass)
+    #print("________________")
+    #print(tableClass)
     k = len(tableClass)
 
     tabla = [[0 for i in range(7)] for j in range(k)]
@@ -113,8 +113,8 @@ def chi():
         #(Fo - Fe)^2 / Fe
         tabla[i][6] = pow(tabla[i][3] - tabla[i][5], 2) / tabla[i][5]
 
-    print("________________")
-    print(tabla)
+    #print("________________")
+    #print(tabla)
     #print(len(tabla))
     sumRes= [0, 0, 0, 0]
 
@@ -123,7 +123,7 @@ def chi():
         column = i
         sumRes[i-3]= sum(row[column] for row in tabla)
 
-    print(sumRes)
+    #print(sumRes)
 
     pp = 7.81
 
@@ -133,32 +133,13 @@ def chi():
         test = False
 
     res = [test, tabla]
-    print(res)
-
-"""
-    alpha= 0.05
-    freedom= 3
-    f_obs= [row[3] for row in tabla]
-    print(f_obs)
-    f_expected= [row[5] for row in tabla]
-    print(f_expected)
-
-    data= [f_obs, f_expected]
-
-    chi_squared_statistic = chisquare(f_obs, f_expected)
-    stat, p, dof, expected = chi2_contingency(data)
-    print(chi_squared_statistic)
-    
-    print("p-value: "+ str(1-p))
-"""
-
-
-
+    print("CHI SQR: "+ str(res[1]))
+    return res
 
 def ks_critical_value(n_trials, alpha):
     return ksone.ppf(1 - alpha / 2, n_trials)
 
-def kolmogrov():
+def kolmogrov(Xi):
     """
     Xi = [22.9, 32.4, 26.2, 27.9, 28.9, 26.2, 28, 29.6, 28.4, 32,
            29, 32.1, 28.1, 27.9, 29.4, 29.6, 28.4, 27.8, 31.5, 23.2,
@@ -167,7 +148,7 @@ def kolmogrov():
            28.7, 24.8, 28.5, 30.1, 24.3, 29.6, 33, 32.4, 32.1, 29.7]
 
     """
-    Xi = [0.05, 0.14, 0.44, 0.81, 0.93]
+    #Xi = [0.05, 0.14, 0.44, 0.81, 0.93]
     a= 0.05
     Xi = sorted(Xi)
     N= len(Xi)
@@ -216,37 +197,5 @@ def kolmogrov():
         test= False
 
     res = [test, tabla]
-    print(res)
-
-chi()
-
-#def mcc(seed, numRadnom):
-def mcc():
-    seed = int(input("Seed: \n"))
-    numRadnom= int(input("Number of Randoms: \n"))
-
-    results = []
-    seeds = [seed, 0]
-
-    def splitSeed(n):
-
-        seed = pow(n[0], 2)
-        seed = str(seed)
-        print(seed)
-
-        if len(seed) < 8:
-            while len(seed) < 8:
-                seed = "0" + seed
-                #print(seed)
-
-        splitSeed = int(seed[2:6])
-        ri = splitSeed / 10000
-
-        return [splitSeed, ri]
-
-
-    for i in range(numRadnom):
-        seeds = splitSeed(seeds)
-        results.append(seeds)
-
-    return results
+    print("KOLMOGROV SQR: "+ str(res[1]))
+    return res

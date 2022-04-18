@@ -1,7 +1,6 @@
 import math
 import array
 
-
 class MCLC:
 
     __x = []

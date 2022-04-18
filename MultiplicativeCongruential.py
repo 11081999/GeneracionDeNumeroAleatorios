@@ -1,4 +1,5 @@
 
+
 class MultiplicativeCongruential:
     __a = None
     __m = None
@@ -33,10 +34,7 @@ class MultiplicativeCongruential:
         for i in range(self.__num_randoms):
             result = []
             rand = (self.__a * self.__current_seed ) % self.__m
-            result = result + [i+1, self.__current_seed, rand]
+            result = result + [i+1, self.__current_seed, rand, rand/self.__m]
             self.__results_list.append(result)
             self.__current_seed = rand
-
-
-
 
