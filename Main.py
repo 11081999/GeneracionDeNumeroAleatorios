@@ -9,7 +9,7 @@ from LinearCongruential import LinearCongruential
 from MixedCongruential import MixedCongruential
 from MiddleSquares import MiddleSquares
 from MultiplicativeCongruential import MultiplicativeCongruential
-#from MCLC import MCLC
+from MCLC import MCLC
 
 """
 Useful Links:
@@ -845,7 +845,7 @@ class PageMCLC(GUI):
         frame1 = tk.LabelFrame(self, frame_styles_5, text="Input")
         frame1.place(rely=0.09, relx=0.02, height=500, width=200)
 
-        # initial_seed, a, c, m, num_randoms
+        # initital vlaue, x, mod, mod_w, num_randoms
 
         initial_seed_label = tk.Label(frame1, text="Semilla :")
         initial_seed_label.pack(anchor="w")
@@ -854,19 +854,26 @@ class PageMCLC(GUI):
         initial_seed_input = tk.Entry(frame1)
         initial_seed_input.pack(anchor="w")
 
-        a_label = tk.Label(frame1, text="a :")
-        a_label.pack(anchor="w")
-        a_label.config(bg=frame_styles_5.get("bg"))
+        x_label = tk.Label(frame1, text="x :")
+        x_label.pack(anchor="w")
+        x_label.config(bg=frame_styles_5.get("bg"))
 
-        a_input = tk.Entry(frame1, width=20)
-        a_input.pack(anchor="w")
+        x_input = tk.Entry(frame1, width=20)
+        x_input.pack(anchor="w")
 
-        m_label = tk.Label(frame1, text="m :")
-        m_label.pack(anchor="w")
-        m_label.config(bg=frame_styles_5.get("bg"))
+        mod_label = tk.Label(frame1, text="mod :")
+        mod_label.pack(anchor="w")
+        mod_label.config(bg=frame_styles_5.get("bg"))
 
-        m_input = tk.Entry(frame1, width=20)
-        m_input.pack(anchor="w")
+        mod_input = tk.Entry(frame1, width=20)
+        mod_input.pack(anchor="w")
+
+        modw_label = tk.Label(frame1, text="mod_w :")
+        modw_label.pack(anchor="w")
+        modw_label.config(bg=frame_styles_5.get("bg"))
+
+        modw_input = tk.Entry(frame1, width=20)
+        modw_input.pack(anchor="w")
 
         num_randoms_label = tk.Label(frame1, text="No. Randoms :")
         num_randoms_label.pack(anchor="w")
@@ -883,37 +890,37 @@ class PageMCLC(GUI):
 
         def mclc_calc(frame):
             initial_seed = str(initial_seed_input.get())
-            a = str(a_input.get())
-            m = str(m_input.get())
+            x = str(x_input.get())
+            mod = str(mod_input.get())
+            modw = str(modw_input.get())
             num_randoms = str(num_randoms_input.get())
 
             for widget in frame2.winfo_children():
                 widget.destroy()
 
             print("initial_seed: " + str(initial_seed))
-            print("a: " + str(a))
-            print("m: " + str(m))
+            print("x: " + str(x))
+            print("mod: " + str(mod))
+            print("modw: " + str(modw))
             print("num_randoms: " + str(num_randoms))
             print("___________________________ ")
 
             label1 = tk.Label(frame, text="Random :")
             label1.pack()
 
-            MultC = MultiplicativeCongruential(eval(initial_seed), eval(a), eval(m), eval(num_randoms))
-            MultCres = MultC.getResultsList()
-            print(MultCres)
+        #def __init__(self, num_randoms, x, mod, initial_value, mod_w):
+            #mclc = MCLC(eval(num_randoms), [3, 5], [5, 7], eval(initial_seed), eval(modw))
+            mclc = MCLC(10, [3, 5], [5, 7], [1, 3], 7)
+            MCLCres = mclc.calculateAllResults()
+            print(MCLCres)
 
-            MultC_frame = Frame(frame)
-            MultC_frame.pack()
-            MultC_table = ttk.Treeview(MultC_frame)
-            MultC_table['columns'] = ('i', 'semilla', "Random")
+            MCLC_frame = Frame(frame)
+            MCLC_frame.pack()
+            MCLC_table = ttk.Treeview(MCLC_frame)
+            MCLC_table['columns'] = ('i', 'semilla', "Random")
 
-            if not MultCres:
-                ans_label = tk.Label(frame, text="No se cumplieron las características")
-                ans_label.pack()
-                ans_label.config(bg="#f5d1cc")
-            else:
-                createTable(MultC_table, MultCres)
+            createTable(MCLC_table, MCLCres)
+
 
 
 

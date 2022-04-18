@@ -2,7 +2,6 @@ import math
 import array
 
 class MCLC:
-
     __x = []
     __mod = []
     __initial_value = []
@@ -36,8 +35,12 @@ class MCLC:
 
             for k in range(2):
                 tabIntermediaire.append(self.calculNum(j, k))
-                w = (tabIntermediaire[0] - tabIntermediaire[1]) % self.__mod_w
-                print("tab inter: ", str(tabIntermediaire))
-                tabIntermediaire.append(w)
+
+            w = (tabIntermediaire[0] - tabIntermediaire[1]) % self.__mod_w
+            print("tab inter: ", str(tabIntermediaire))
+            tabIntermediaire.append(w)
 
             self.__result.append(tabIntermediaire)
+
+        return self.__result
+
