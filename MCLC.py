@@ -1,8 +1,8 @@
 import math
 import array
 
-class MCLC:
 
+class MCLC:
     __x = []
     __mod = []
     __initial_value = []
@@ -29,6 +29,9 @@ class MCLC:
     def calculateAllResults(self):
         for j in range(self.__num_randoms):
             if j == 0:
+                w = (self.__initial_value[0] -
+                     self.__initial_value[1]) % self.__mod_w
+                self.__initial_value.append(w)
                 self.__result.append(self.__initial_value)
                 continue
 
@@ -36,13 +39,11 @@ class MCLC:
 
             for k in range(2):
                 tabIntermediaire.append(self.calculNum(j, k))
-                w = (tabIntermediaire[0] - tabIntermediaire[1]) % self.__mod_w
-                print("tab inter: ", str(tabIntermediaire))
-                tabIntermediaire.append(w)
+
+            w = (tabIntermediaire[0] - tabIntermediaire[1]) % self.__mod_w
+            tabIntermediaire.append(w)
 
             self.__result.append(tabIntermediaire)
-<<<<<<< Updated upstream
-=======
 
         return [self.__result, self.calculP()]
 
@@ -50,4 +51,3 @@ class MCLC:
 #mclc = MCLC(10, [3, 5], [5, 7], [1, 3], 7)
 #rrr = mclc.calculateAllResults()
 #print(rrr)
->>>>>>> Stashed changes

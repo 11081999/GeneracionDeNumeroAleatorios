@@ -9,7 +9,7 @@ from LinearCongruential import LinearCongruential
 from MixedCongruential import MixedCongruential
 from MiddleSquares import MiddleSquares
 from MultiplicativeCongruential import MultiplicativeCongruential
-#from MCLC import MCLC
+from MCLC import MCLC
 
 """
 Useful Links:
@@ -845,7 +845,7 @@ class PageMCLC(GUI):
         frame1 = tk.LabelFrame(self, frame_styles_5, text="Input")
         frame1.place(rely=0.09, relx=0.02, height=500, width=200)
 
-        # initial_seed, a, c, m, num_randoms
+        # initital vlaue, x, mod, mod_w, num_randoms
 
         x1_label = tk.Label(frame1, text="x1 (x1 mod x2):")
         x1_label.pack(anchor="w")
@@ -861,21 +861,6 @@ class PageMCLC(GUI):
         x2_input = tk.Entry(frame1, width=20)
         x2_input.pack(anchor="w")
 
-<<<<<<< Updated upstream
-        a_label = tk.Label(frame1, text="a :")
-        a_label.pack(anchor="w")
-        a_label.config(bg=frame_styles_5.get("bg"))
-
-        a_input = tk.Entry(frame1, width=20)
-        a_input.pack(anchor="w")
-
-        m_label = tk.Label(frame1, text="m :")
-        m_label.pack(anchor="w")
-        m_label.config(bg=frame_styles_5.get("bg"))
-
-        m_input = tk.Entry(frame1, width=20)
-        m_input.pack(anchor="w")
-=======
         y1_label = tk.Label(frame1, text="y1 (y1 mod y2):")
         y1_label.pack(anchor="w")
         y1_label.config(bg=frame_styles_5.get("bg"))
@@ -903,7 +888,6 @@ class PageMCLC(GUI):
 
         ini2_input = tk.Entry(frame1, width=20)
         ini2_input.pack(anchor="w")
->>>>>>> Stashed changes
 
         num_randoms_label = tk.Label(frame1, text="No. Randoms :")
         num_randoms_label.pack(anchor="w")
@@ -919,22 +903,10 @@ class PageMCLC(GUI):
         frame2.place(rely=0.09, relx=0.2, height=500, width=900)
 
         def mclc_calc(frame):
-<<<<<<< Updated upstream
-            initial_seed = str(initial_seed_input.get())
-            a = str(a_input.get())
-            m = str(m_input.get())
-            num_randoms = str(num_randoms_input.get())
-=======
->>>>>>> Stashed changes
 
             x1 = int(x1_input.get())
             x2 = int(x2_input.get())
 
-<<<<<<< Updated upstream
-            print("initial_seed: " + str(initial_seed))
-            print("a: " + str(a))
-            print("m: " + str(m))
-=======
             y1 = int(y1_input.get())
             y2 = int(y2_input.get())
 
@@ -949,7 +921,6 @@ class PageMCLC(GUI):
             print("y2: " + str(y2))
             print("ini1: " + str(ini1))
             print("ini2: " + str(ini2))
->>>>>>> Stashed changes
             print("num_randoms: " + str(num_randoms))
             print("___________________________ ")
 
@@ -959,16 +930,6 @@ class PageMCLC(GUI):
             label1 = tk.Label(frame, text="Random :")
             label1.pack()
 
-<<<<<<< Updated upstream
-            MultC = MultiplicativeCongruential(eval(initial_seed), eval(a), eval(m), eval(num_randoms))
-            MultCres = MultC.getResultsList()
-            print(MultCres)
-
-            MultC_frame = Frame(frame)
-            MultC_frame.pack()
-            MultC_table = ttk.Treeview(MultC_frame)
-            MultC_table['columns'] = ('i', 'semilla', "Random")
-=======
         #def __init__(self, num_randoms, x, mod, initial_value, mod_w):
             #mclc = MCLC(eval(num_randoms), [3, 5], [5, 7], eval(initial_seed), eval(modw))
 
@@ -996,14 +957,7 @@ class PageMCLC(GUI):
             modw_label = tk.Label(frame, text=text)
 
             modw_label.pack()
->>>>>>> Stashed changes
 
-            if not MultCres:
-                ans_label = tk.Label(frame, text="No se cumplieron las características")
-                ans_label.pack()
-                ans_label.config(bg="#f5d1cc")
-            else:
-                createTable(MultC_table, MultCres)
 
 
 
