@@ -8,39 +8,37 @@ class MCLC:
     __mod = []
     __initial_value = []
     __result = []
-    __num_reglas = 0
     __num_randoms = 0
+    __mod_w = 0
+    __per = 0
 
-    def __init__(self, num_randoms, num_reglas):
+    def __init__(self, num_randoms, x, mod, initial_value, mod_w):
         self.__num_randoms = num_randoms
-        self.__num_reglas = num_reglas
-
-    def initValue(self):
-        for i in range(self.__num_reglas):
-            x = 0
-            mod = 0
-
-            x = int(input("x : \n"))
-            mod = int(input("mod : \n"))
-            intial_value = int(input("intial value: \n"))
-            self.__x.append(x)
-            self.__mod.append(mod)
-            self.__initial_value.append(intial_value)
-            print("next rule:\n")
+        self.__x = x
+        self.__mod = mod
+        self.__initial_value = initial_value
+        self.__mod_w = mod_w
 
     def calculNum(self, j, k):
         res = (self.__x[k]*self.__result[j-1][k]) % (self.__mod[k])
         return res
 
+    def calculP(self):
+        p = ((self.__mod[0]-1)*(self.__mod[1]-1))/2
+        return p
+
     def calculateAllResults(self):
         for j in range(self.__num_randoms):
             if j == 0:
-                self.__result.append(self.__initial_value)  # init tab result
+                self.__result.append(self.__initial_value)
                 continue
 
             tabIntermediaire = []
 
-            for k in range(self.__num_reglas):
+            for k in range(2):
                 tabIntermediaire.append(self.calculNum(j, k))
+                w = (tabIntermediaire[0] - tabIntermediaire[1]) % self.__mod_w
+                print("tab inter: ", str(tabIntermediaire))
+                tabIntermediaire.append(w)
 
             self.__result.append(tabIntermediaire)
