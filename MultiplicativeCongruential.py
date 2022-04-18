@@ -37,3 +37,4 @@ class MultiplicativeCongruential:
             result = result + [i+1, self.__current_seed, rand, rand/self.__m]
             self.__results_list.append(result)
             self.__current_seed = rand
+
