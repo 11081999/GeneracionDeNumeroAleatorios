@@ -30,7 +30,7 @@ class LinearCongruential:
         result.append(ri)
 
     def getResultsList(self):
-        self.__resetVariables()
+        self._resetVariables()
         self._calculateLinealCongruential()
         return self._results_list
 
