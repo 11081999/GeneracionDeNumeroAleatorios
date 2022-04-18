@@ -6,12 +6,12 @@ X = []
 MOD = []
 firstValue = []
 RESULT = []
-numReglas = 0
+numReglas = 2
 numRandom = 0
 
 while numReglas < 2:
     numReglas = int(input("num reglas: \n"))
-numRandom = int(input("num random: \n"))
+    numRandom = int(input("num random: \n"))
 
 
 def calculNum(j, k, X, MOD, RESULT):

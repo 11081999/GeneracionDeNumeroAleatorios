@@ -11,7 +11,6 @@
 import math
 from scipy.stats import ksone
 
-
 def chi(Xi):
     """
     Xi = [22.9, 32.4, 26.2, 27.9, 28.9, 26.2, 28, 29.6, 28.4, 32,
