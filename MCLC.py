@@ -36,7 +36,7 @@ class MCLC:
                 continue
 
             tabIntermediaire = []
-
+            tabIntermediaire.append(j)
             for k in range(2):
                 tabIntermediaire.append(self.calculNum(j, k))
 
@@ -46,8 +46,3 @@ class MCLC:
             self.__result.append(tabIntermediaire)
 
         return self.__result
-
-
-mclc = MCLC(10, [3, 5], [5, 7], [1, 3], 7)
-rrr = mclc.calculateAllResults()
-print(rrr)
