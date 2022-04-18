@@ -41,3 +41,13 @@ class MCLC:
                 tabIntermediaire.append(w)
 
             self.__result.append(tabIntermediaire)
+<<<<<<< Updated upstream
+=======
+
+        return [self.__result, self.calculP()]
+
+
+#mclc = MCLC(10, [3, 5], [5, 7], [1, 3], 7)
+#rrr = mclc.calculateAllResults()
+#print(rrr)
+>>>>>>> Stashed changes

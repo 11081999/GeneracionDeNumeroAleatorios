@@ -847,13 +847,21 @@ class PageMCLC(GUI):
 
         # initial_seed, a, c, m, num_randoms
 
-        initial_seed_label = tk.Label(frame1, text="Semilla :")
-        initial_seed_label.pack(anchor="w")
-        initial_seed_label.config(bg=frame_styles_5.get("bg"))
+        x1_label = tk.Label(frame1, text="x1 (x1 mod x2):")
+        x1_label.pack(anchor="w")
+        x1_label.config(bg=frame_styles_5.get("bg"))
 
-        initial_seed_input = tk.Entry(frame1)
-        initial_seed_input.pack(anchor="w")
+        x1_input = tk.Entry(frame1, width=20)
+        x1_input.pack(anchor="w")
 
+        x2_label = tk.Label(frame1, text="x2 (x1 mod x2):")
+        x2_label.pack(anchor="w")
+        x2_label.config(bg=frame_styles_5.get("bg"))
+
+        x2_input = tk.Entry(frame1, width=20)
+        x2_input.pack(anchor="w")
+
+<<<<<<< Updated upstream
         a_label = tk.Label(frame1, text="a :")
         a_label.pack(anchor="w")
         a_label.config(bg=frame_styles_5.get("bg"))
@@ -867,6 +875,35 @@ class PageMCLC(GUI):
 
         m_input = tk.Entry(frame1, width=20)
         m_input.pack(anchor="w")
+=======
+        y1_label = tk.Label(frame1, text="y1 (y1 mod y2):")
+        y1_label.pack(anchor="w")
+        y1_label.config(bg=frame_styles_5.get("bg"))
+
+        y1_input = tk.Entry(frame1, width=20)
+        y1_input.pack(anchor="w")
+
+        y2_label = tk.Label(frame1, text="y2 (y1 mod y2):")
+        y2_label.pack(anchor="w")
+        y2_label.config(bg=frame_styles_5.get("bg"))
+
+        y2_input = tk.Entry(frame1, width=20)
+        y2_input.pack(anchor="w")
+
+        ini1_label = tk.Label(frame1, text="Ini1 :")
+        ini1_label.pack(anchor="w")
+        ini1_label.config(bg=frame_styles_5.get("bg"))
+
+        ini1_input = tk.Entry(frame1, width=20)
+        ini1_input.pack(anchor="w")
+
+        ini2_label = tk.Label(frame1, text="Ini2 :")
+        ini2_label.pack(anchor="w")
+        ini2_label.config(bg=frame_styles_5.get("bg"))
+
+        ini2_input = tk.Entry(frame1, width=20)
+        ini2_input.pack(anchor="w")
+>>>>>>> Stashed changes
 
         num_randoms_label = tk.Label(frame1, text="No. Randoms :")
         num_randoms_label.pack(anchor="w")
@@ -882,23 +919,47 @@ class PageMCLC(GUI):
         frame2.place(rely=0.09, relx=0.2, height=500, width=900)
 
         def mclc_calc(frame):
+<<<<<<< Updated upstream
             initial_seed = str(initial_seed_input.get())
             a = str(a_input.get())
             m = str(m_input.get())
             num_randoms = str(num_randoms_input.get())
+=======
+>>>>>>> Stashed changes
+
+            x1 = int(x1_input.get())
+            x2 = int(x2_input.get())
+
+<<<<<<< Updated upstream
+            print("initial_seed: " + str(initial_seed))
+            print("a: " + str(a))
+            print("m: " + str(m))
+=======
+            y1 = int(y1_input.get())
+            y2 = int(y2_input.get())
+
+            ini1 = int(ini1_input.get())
+            ini2 = int(ini2_input.get())
+
+            num_randoms = int(num_randoms_input.get())
+
+            print("x1: " + str(x1))
+            print("x2: " + str(x2))
+            print("y1: " + str(y1))
+            print("y2: " + str(y2))
+            print("ini1: " + str(ini1))
+            print("ini2: " + str(ini2))
+>>>>>>> Stashed changes
+            print("num_randoms: " + str(num_randoms))
+            print("___________________________ ")
 
             for widget in frame2.winfo_children():
                 widget.destroy()
 
-            print("initial_seed: " + str(initial_seed))
-            print("a: " + str(a))
-            print("m: " + str(m))
-            print("num_randoms: " + str(num_randoms))
-            print("___________________________ ")
-
             label1 = tk.Label(frame, text="Random :")
             label1.pack()
 
+<<<<<<< Updated upstream
             MultC = MultiplicativeCongruential(eval(initial_seed), eval(a), eval(m), eval(num_randoms))
             MultCres = MultC.getResultsList()
             print(MultCres)
@@ -907,6 +968,35 @@ class PageMCLC(GUI):
             MultC_frame.pack()
             MultC_table = ttk.Treeview(MultC_frame)
             MultC_table['columns'] = ('i', 'semilla', "Random")
+=======
+        #def __init__(self, num_randoms, x, mod, initial_value, mod_w):
+            #mclc = MCLC(eval(num_randoms), [3, 5], [5, 7], eval(initial_seed), eval(modw))
+
+            #xVal    = [3, 5]
+            #modVal  = [5, 7]
+            #iniVal  = [1, 3]
+            #num_randoms= 10
+
+            xVal    = [x1, y1]
+            modVal  = [x2, y2]
+            iniVal  = [ini1, ini2]
+
+            mclc = MCLC(num_randoms, xVal, modVal, iniVal, max(modVal))
+            MCLCres = mclc.calculateAllResults()
+            print(MCLCres)
+
+            MCLC_frame = Frame(frame)
+            MCLC_frame.pack()
+            MCLC_table = ttk.Treeview(MCLC_frame)
+            MCLC_table['columns'] = ('Xn', 'Yn', "Wn")
+
+            createTable(MCLC_table, MCLCres[0])
+
+            text= "Periodo :" + str(MCLCres[1])
+            modw_label = tk.Label(frame, text=text)
+
+            modw_label.pack()
+>>>>>>> Stashed changes
 
             if not MultCres:
                 ans_label = tk.Label(frame, text="No se cumplieron las características")
