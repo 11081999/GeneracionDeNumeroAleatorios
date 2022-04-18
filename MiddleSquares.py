@@ -10,6 +10,7 @@ class MiddleSquares:
         self.__num_randoms = num_randoms
 
     def getResultsList(self):
+        self.__resetVariables()
         self.__calculateMiddleSquares()
         return self.__results_list
 
@@ -22,7 +23,6 @@ class MiddleSquares:
 
     def __calculateMiddSquaresRow(self, result):
         generator = pow(self.__current_seed, 2)
-
         self.__current_seed = self.__splitSeed(str(generator), result)
         result.append(self.__current_seed)
         ri = self.__current_seed / 10000
@@ -31,9 +31,12 @@ class MiddleSquares:
     def __splitSeed(self, seed, result):
         if len(seed) < 8:
             while len(seed) < 8:
-                #print("Seed: " + str(seed))
                 seed = "0" + seed
         split_seed = int(seed[2:6])
-        print("Seed: " + str(seed))
         result.append(seed)
         return split_seed
+
+    def __resetVariables(self):
+        self.__results_list = []
+        self.__current_seed = self.__initial_seed
+

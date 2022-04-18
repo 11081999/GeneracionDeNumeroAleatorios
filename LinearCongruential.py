@@ -30,11 +30,11 @@ class LinearCongruential:
         result.append(ri)
 
     def getResultsList(self):
-        self.resetVariables()
+        self.__resetVariables()
         self._calculateLinealCongruential()
         return self._results_list
 
-    def resetVariables(self):
+    def _resetVariables(self):
         self._results_list = []
         self._current_seed = self._initial_seed
 

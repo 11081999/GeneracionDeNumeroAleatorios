@@ -25,6 +25,7 @@ class MultiplicativeCongruential:
         return True
 
     def getResultsList(self):
+        self.__resetVariables()
         if self.__checkConditions():
             self.__calculateMultiplicativeCongruential()
             return self.__results_list
@@ -33,8 +34,11 @@ class MultiplicativeCongruential:
     def __calculateMultiplicativeCongruential(self):
         for i in range(self.__num_randoms):
             result = []
-            rand = (self.__a * self.__current_seed ) % self.__m
+            rand = (self.__a * self.__current_seed) % self.__m
             result = result + [i+1, self.__current_seed, rand, rand/self.__m]
             self.__results_list.append(result)
             self.__current_seed = rand
 
+    def __resetVariables(self):
+        self.__results_list = []
+        self.__current_seed = self.__initial_seed

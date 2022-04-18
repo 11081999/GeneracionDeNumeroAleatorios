@@ -39,6 +39,7 @@ class MixedCongruential(LinearCongruential):
         return False
 
     def getResultsList(self):
+        self._resetVariables()
         if self.__checkTheoremHullDobell():
             self._calculateLinealCongruential()
             return self._results_list
