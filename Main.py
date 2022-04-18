@@ -838,7 +838,7 @@ class PageMCLC(GUI):
 
         self.main_frame.configure(bg=frame_styles_5.get("bg"))
 
-        label1 = tk.Label(self.main_frame, font=("Verdana", 20), text="Metodo Congruencial Linial Combinado")
+        label1 = tk.Label(self.main_frame, font=("Verdana", 20), text="Metodo Congruencial Lineal Combinado")
         label1.pack(side="top")
         label1.config(bg=frame_styles_5.get("bg"))
 
