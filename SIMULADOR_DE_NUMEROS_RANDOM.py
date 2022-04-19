@@ -115,10 +115,10 @@ class MenuBar(tk.Menu):
         tk.Menu.__init__(self, parent)
 
         menu_file = tk.Menu(self, tearoff=0)
-        self.add_cascade(label="Menu1", menu=menu_file)
+        self.add_cascade(label="Menu", menu=menu_file)
         menu_file.add_command(label="Congruencial Lineal", command=lambda: parent.show_frame(PageCL))
         menu_file.add_command(label="Congruencial Mixto", command=lambda: parent.show_frame(PageMxC))
-        menu_file.add_command(label="Centros Cuadrados", command=lambda: parent.show_frame(PageMS))
+        menu_file.add_command(label="Cuadrados medios", command=lambda: parent.show_frame(PageMS))
         menu_file.add_command(label="Multiplicativo Congruencial", command=lambda: parent.show_frame(PageMult))
 
         menu_file.add_command(label="Congruencial Lineal Combinado", command=lambda: parent.show_frame(PageMCLC))
